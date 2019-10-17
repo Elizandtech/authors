@@ -1,0 +1,45 @@
+<div class="container">
+    <button class="btn btn-primary" [routerLink] = "['/']">Home</button>
+    <div class="my-5">
+        <h2>Add New Author</h2>
+        <!--     <p> {{ newAuthor | json }} </p> -->
+        <p class="errors alert alert-danger" *ngFor="let err of errormsg">{{err}}</p>
+        <form (submit)="onSubmitAuthor()" #createForm="ngForm">
+          <div class="form-group">
+            <label for="authorName">Name</label>
+            <input type="text" class="form-control" #name="ngModel" name="newAuthor.name" [(ngModel)]="newAuthor.name" id="authorName" required minlength="3"/>
+            <div *ngIf="(name?.touched || name?.dirty) && name?.errors">
+                <div *ngIf="name?.errors?.required" class="alert alert-danger">
+                  You must enter a name!
+                </div>
+                <div *ngIf="name?.errors?.minlength" class="alert alert-danger">
+                  Name must be at least
+                  {{ name?.errors?.minlength.requiredLength }} characters
+                </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="authorQuote">Quote</label>
+            <input type="text" class="form-control" #quote="ngModel" name="newAuthor.quote" [(ngModel)]="newAuthor.quote" id="authorQuote" required minlength="3"/>
+            <div *ngIf="(quote?.touched || quote?.dirty) && quote?.errors">
+                <div *ngIf="quote?.errors?.required" class="alert alert-danger">
+                  You must enter a quote!
+                </div>
+                <div *ngIf="quote?.errors?.minlength" class="alert alert-danger">
+                  quote must be at least
+                  {{ quote?.errors?.minlength.requiredLength }} characters
+                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-2">
+                <button  class="btn btn-danger" [routerLink] = "['/']">Cancel</button>
+            </div>
+            <div class="col-2">
+              <button type="submit" class="btn btn-success" [disabled]="createForm.invalid">Add Author</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- [disabled]="createForm.invalid" -->
